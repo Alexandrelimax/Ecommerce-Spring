@@ -1,16 +1,28 @@
 package com.course.ecommerce.entity;
 
 
-import java.io.Serializable;
-import java.util.Objects;
+import jakarta.persistence.*;
 
+//import java.io.Serializable;
+import java.util.Objects;
+@Entity
+@Table(name = "tb_users")
 public class User  {
 //    private static final long serialVersionUID = 1L;
-
+    @Id
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Integer id;
+
+    @Column(nullable = false)
     private String name;
+
+    @Column(nullable = false, unique = true)
     private String email;
+
+    @Column(nullable = false)
     private String phone;
+
+    @Column(nullable = false)
     private String password;
 
     public User() {
