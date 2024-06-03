@@ -1,5 +1,6 @@
 package com.course.ecommerce.entity;
 
+import com.course.ecommerce.Enums.OrderStatus;
 import jakarta.persistence.*;
 
 import java.time.Instant;
@@ -8,24 +9,29 @@ import java.util.Date;
 @Entity
 @Table(name = "orders")
 public class Order {
+
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Integer id;
+
     @Column(nullable = false)
     private Instant moment;
 
     @ManyToOne
     @JoinColumn(name = "userId")
     private User client;
-//    private OrderStatus orderStatus;
+
+
+    private Integer orderStatus;
 
 
     public Order() {
     }
 
-    public Order(Integer id, Instant moment, User client) {
+    public Order(Integer id, Instant moment, OrderStatus orderStatus, User client) {
         this.id = id;
         this.moment = moment;
+        setOrderStatus(orderStatus);
         this.client = client;
     }
 
@@ -43,6 +49,16 @@ public class Order {
 
     public void setMoment(Instant moment) {
         this.moment = moment;
+    }
+
+    public OrderStatus getOrderStatus() {
+        return OrderStatus.valueOf(orderStatus);
+    }
+
+    public void setOrderStatus(OrderStatus orderStatus) {
+        if(orderStatus != null){
+        this.orderStatus = orderStatus.getCode();
+        }
     }
 
     public User getClient() {
